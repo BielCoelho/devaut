@@ -1,17 +1,9 @@
 import { type NextPage } from "next";
 
-import { Button, ButtonVariant } from "../components/Button";
-import { Login } from "./Login";
+import { HomeContent } from "../contents/Home";
 
 const Home: NextPage = () => {
-
-  return (
-    <>
-      <Login />
-      <Button variant={ButtonVariant.SECONDARY}>Teste</Button>
-    </>
-  );
+  return <HomeContent />;
 };
 
-Home.displayName = "HomePage";
 export default Home;

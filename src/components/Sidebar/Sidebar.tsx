@@ -1,15 +1,7 @@
-import React, { useState } from "react";
-import {
-  Menu,
-  Activity,
-  Sun,
-  Users,
-  CheckCircle,
-  User,
-  LogOut,
-} from "react-feather";
+import React, { useState } from 'react';
+import { Menu, Activity, Sun, Users, CheckCircle, User, LogOut } from 'react-feather';
 
-const Sidebar = () => {
+export const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
 
   function toggleVisibility() {
@@ -32,9 +24,7 @@ const Sidebar = () => {
         </header>
         <nav className="mt-4 flex flex-col gap-6">
           <div className="flex flex-col gap-1">
-            <p className="mb-2 text-xs font-bold uppercase text-orange-300">
-              TRABALHO TERAPEUTICO
-            </p>
+            <p className="mb-2 text-xs font-bold uppercase text-orange-300">TRABALHO TERAPEUTICO</p>
             <span className="flex items-center gap-2 text-base capitalize transition duration-150 hover:text-orange-600">
               <Activity size={16} />
               Visão Geral
@@ -49,18 +39,14 @@ const Sidebar = () => {
             </span>
           </div>
           <div className="flex flex-col">
-            <p className="mb-2 text-xs font-bold uppercase text-orange-300">
-              CONFIGURAÇÕES
-            </p>
+            <p className="mb-2 text-xs font-bold uppercase text-orange-300">CONFIGURAÇÕES</p>
             <span className="flex items-center gap-2 text-base capitalize">
               <CheckCircle size={16} />
               Objetivos ESDM
             </span>
           </div>
           <div className="flex flex-col gap-1">
-            <p className="mb-2 text-xs font-bold uppercase text-orange-300">
-              USUÁRIO
-            </p>
+            <p className="mb-2 text-xs font-bold uppercase text-orange-300">USUÁRIO</p>
             <span className="flex items-center gap-2 text-base capitalize">
               <User size={16} />
               Meu Perfil
@@ -75,5 +61,3 @@ const Sidebar = () => {
     </>
   );
 };
-
-export default Sidebar;

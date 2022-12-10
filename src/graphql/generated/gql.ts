@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as types from "./graphql";
-import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
+import * as types from './graphql';
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 
 /**
  * Map of all GraphQL operations in the project.
@@ -13,9 +13,9 @@ import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
-  "\n  mutation createUser($data: CreateUserInput!) {\n    createUser(data: $data) {\n      user {\n        id\n        name\n        email\n        birthday\n        gender\n        phone\n      }\n      token\n    }\n  }\n":
+  '\n  mutation createUser($data: CreateUserInput!) {\n    createUser(data: $data) {\n      user {\n        id\n        name\n        email\n        birthday\n        gender\n        phone\n      }\n      token\n    }\n  }\n':
     types.CreateUserDocument,
-  "\n  mutation authUser($data: AuthUserInput!) {\n    authUser(data: $data) {\n      token\n      user {\n        id\n        name\n      }\n    }\n  }\n":
+  '\n  mutation authUser($data: AuthUserInput!) {\n    authUser(data: $data) {\n      token\n      user {\n        id\n        name\n      }\n    }\n  }\n':
     types.AuthUserDocument,
 };
 
@@ -23,14 +23,14 @@ const documents = {
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  mutation createUser($data: CreateUserInput!) {\n    createUser(data: $data) {\n      user {\n        id\n        name\n        email\n        birthday\n        gender\n        phone\n      }\n      token\n    }\n  }\n"
-): typeof documents["\n  mutation createUser($data: CreateUserInput!) {\n    createUser(data: $data) {\n      user {\n        id\n        name\n        email\n        birthday\n        gender\n        phone\n      }\n      token\n    }\n  }\n"];
+  source: '\n  mutation createUser($data: CreateUserInput!) {\n    createUser(data: $data) {\n      user {\n        id\n        name\n        email\n        birthday\n        gender\n        phone\n      }\n      token\n    }\n  }\n'
+): typeof documents['\n  mutation createUser($data: CreateUserInput!) {\n    createUser(data: $data) {\n      user {\n        id\n        name\n        email\n        birthday\n        gender\n        phone\n      }\n      token\n    }\n  }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  mutation authUser($data: AuthUserInput!) {\n    authUser(data: $data) {\n      token\n      user {\n        id\n        name\n      }\n    }\n  }\n"
-): typeof documents["\n  mutation authUser($data: AuthUserInput!) {\n    authUser(data: $data) {\n      token\n      user {\n        id\n        name\n      }\n    }\n  }\n"];
+  source: '\n  mutation authUser($data: AuthUserInput!) {\n    authUser(data: $data) {\n      token\n      user {\n        id\n        name\n      }\n    }\n  }\n'
+): typeof documents['\n  mutation authUser($data: AuthUserInput!) {\n    authUser(data: $data) {\n      token\n      user {\n        id\n        name\n      }\n    }\n  }\n'];
 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

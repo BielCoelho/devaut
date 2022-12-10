@@ -1,4 +1,4 @@
-/* eslint-disable react/display-name */
+import React from 'react';
 
 export function withAuth<T>(Component: React.ComponentType<T>) {
   return (props: T) => {
@@ -9,4 +9,4 @@ export function withAuth<T>(Component: React.ComponentType<T>) {
   };
 }
 
-withAuth.displayName = "withAuth";
+withAuth.displayName = 'withAuthComponent';

@@ -32,14 +32,11 @@
     ],
     "react-hooks/exhaustive-deps": "off",
     "no-console": "warn",
-    "react/react-in-jsx-scope": "off",
+    "react/react-in-jsx-scope": "warn",
     "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/ban-ts-comment": "off",
     "react/display-name": ["off", { "ignoreTranspilerName": true }],
-    "@typescript-eslint/consistent-type-imports": [
-      "warn",
-      { "fixStyle": "inline-type-imports" }
-    ],
+    "@typescript-eslint/consistent-type-imports": ["warn", { "fixStyle": "inline-type-imports" }],
     "react/prop-types": "off",
     "@typescript-eslint/naming-convention": [
       "error",
@@ -57,15 +54,12 @@
       {
         "newlinesBetween": "always",
         "groups": [
-          "/react/",
-          "/^next/",
+          ["/^react/", "/^next/"],
+          "/^@/",
+          "/^graphql/",
           "module",
-          ["parent", "sibling", "index", "/^styles/"]
-        ],
-        "alphabetize": {
-          "order": "asc",
-          "ignoreCase": true
-        }
+          ["parent", "sibling", "index"]
+        ]
       }
     ]
   },
@@ -78,8 +72,7 @@
     },
     "import/resolver": {
       "typescript": {
-        "alwaysTryTypes": true,
-        "project": "./tsconfig.json"
+        "alwaysTryTypes": true
       }
     }
   }

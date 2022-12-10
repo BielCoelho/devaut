@@ -1,6 +1,7 @@
-import { type NextPage } from "next";
+import React from 'react';
+import { type NextPage } from 'next';
 
-import { HomeContent } from "../contents/Home";
+import { HomeContent } from 'contents/Home';
 
 const Home: NextPage = () => {
   return <HomeContent />;

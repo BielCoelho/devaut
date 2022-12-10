@@ -1,14 +1,15 @@
-import { Controller, useForm } from "react-hook-form";
+import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
-import { Button, ButtonVariant } from "../../components/Button";
-import { Input } from "../../components/Input";
-import { withAuth } from "../../utils/withAuth";
+import { Button, ButtonVariant } from 'components/Button';
+import { withAuth } from 'utils/withAuth';
+import { Input } from 'components/Input';
 
-const LoginBase = () => {
+export const Login = withAuth(() => {
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      email: "teste@teste.com",
-      password: "123456",
+      email: 'teste@teste.com',
+      password: '123456',
     },
   });
 
@@ -41,9 +42,7 @@ const LoginBase = () => {
               );
             }}
           />
-          <label className="mb-2 mt-4 block font-bold text-orange-700">
-            Password
-          </label>
+          <label className="mb-2 mt-4 block font-bold text-orange-700">Password</label>
           <Controller
             name="password"
             control={control}
@@ -77,6 +76,4 @@ const LoginBase = () => {
       <Button variant={ButtonVariant.SECONDARY}>Teste</Button>
     </>
   );
-};
-
-export const Login = withAuth(LoginBase);
+});

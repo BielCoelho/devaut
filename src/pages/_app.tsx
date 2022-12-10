@@ -1,10 +1,12 @@
-import { queryClient } from "../services/reactQuery/client";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import '../styles/globals.css';
 
-import type { AppProps } from "next/app";
+import React from 'react';
+import { type AppProps } from 'next/app';
 
-import "../styles/globals.css";
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+import { queryClient } from 'services/react-query';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

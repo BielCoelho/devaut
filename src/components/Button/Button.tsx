@@ -5,7 +5,7 @@ import { getButtonVariants } from './helpers';
 
 export const Button = ({ children, variant = ButtonVariant.PRIMARY, ...rest }: IButtonProps) => {
   return (
-    <button className={getButtonVariants(variant)} {...rest}>
+    <button className={`${getButtonVariants(variant)}`} {...rest}>
       {children}
     </button>
   );

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { withAuth } from 'utils/withAuth';
-
-export const DashboardContent = withAuth(() => {
+export const DashboardContent = () => {
   return <p>dashboard</p>;
-});
+};

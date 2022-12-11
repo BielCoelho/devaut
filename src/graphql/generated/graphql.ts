@@ -21,6 +21,24 @@ export type AuthUserInput = {
   password: Scalars['String'];
 };
 
+export type Child = {
+  __typename?: 'Child';
+  active: Scalars['Boolean'];
+  birthday: Scalars['DateTime'];
+  createdAt: Scalars['DateTime'];
+  gender: GenderEnum;
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
+export type CreateChildInput = {
+  active: Scalars['Boolean'];
+  birthday: Scalars['DateTime'];
+  gender: GenderEnum;
+  name: Scalars['String'];
+};
+
 export type CreateUser = {
   __typename?: 'CreateUser';
   token: Scalars['String'];
@@ -31,30 +49,53 @@ export type CreateUserInput = {
   birthday: Scalars['DateTime'];
   confirmPassword: Scalars['String'];
   email: Scalars['String'];
-  gender: Scalars['String'];
+  gender: GenderEnum;
   name: Scalars['String'];
   password: Scalars['String'];
   phone: Scalars['String'];
 };
 
+/** Available Genders types enum */
+export enum GenderEnum {
+  Female = 'FEMALE',
+  Male = 'MALE',
+  NotInformed = 'NOT_INFORMED',
+}
+
 export type Mutation = {
   __typename?: 'Mutation';
   authUser: CreateUser;
+  createChild: Child;
   createUser: CreateUser;
-  helloMutation: Scalars['String'];
+  updateUser: CreateUser;
 };
 
 export type MutationAuthUserArgs = {
   data: AuthUserInput;
 };
 
+export type MutationCreateChildArgs = {
+  data: CreateChildInput;
+};
+
 export type MutationCreateUserArgs = {
+  data: CreateUserInput;
+};
+
+export type MutationUpdateUserArgs = {
   data: CreateUserInput;
 };
 
 export type Query = {
   __typename?: 'Query';
-  hello: Scalars['String'];
+  getUserByID: CreateUser;
+  me: CreateUser;
+  testeChild: Scalars['String'];
+  testeUser: Scalars['String'];
+};
+
+export type QueryGetUserByIdArgs = {
+  id: Scalars['String'];
 };
 
 export type User = {
@@ -62,7 +103,7 @@ export type User = {
   birthday: Scalars['DateTime'];
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
-  gender: Scalars['String'];
+  gender: GenderEnum;
   id: Scalars['ID'];
   name: Scalars['String'];
   phone: Scalars['String'];
@@ -84,7 +125,7 @@ export type CreateUserMutation = {
       name: string;
       email: string;
       birthday: any;
-      gender: string;
+      gender: GenderEnum;
       phone: string;
     };
   };
@@ -99,7 +140,38 @@ export type AuthUserMutation = {
   authUser: {
     __typename?: 'CreateUser';
     token: string;
-    user: { __typename?: 'User'; id: string; name: string };
+    user: {
+      __typename?: 'User';
+      id: string;
+      name: string;
+      email: string;
+      gender: GenderEnum;
+      birthday: any;
+      phone: string;
+      createdAt: any;
+      updatedAt: any;
+    };
+  };
+};
+
+export type MeQueryQueryVariables = Exact<{ [key: string]: never }>;
+
+export type MeQueryQuery = {
+  __typename?: 'Query';
+  me: {
+    __typename?: 'CreateUser';
+    token: string;
+    user: {
+      __typename?: 'User';
+      id: string;
+      name: string;
+      email: string;
+      birthday: any;
+      gender: GenderEnum;
+      phone: string;
+      createdAt: any;
+      updatedAt: any;
+    };
   };
 };
 
@@ -202,6 +274,12 @@ export const AuthUserDocument = {
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'gender' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'birthday' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'phone' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
                     ],
                   },
                 },
@@ -213,3 +291,45 @@ export const AuthUserDocument = {
     },
   ],
 } as unknown as DocumentNode<AuthUserMutation, AuthUserMutationVariables>;
+export const MeQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'meQuery' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'me' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'token' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'user' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'birthday' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'gender' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'phone' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<MeQueryQuery, MeQueryQueryVariables>;

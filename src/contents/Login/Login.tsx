@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import { Button, ButtonVariant } from 'components/Button';
-import { withAuth } from 'utils/withAuth';
+import { Button } from 'components/Button';
 import { Input } from 'components/Input';
+import { useAuth } from 'contexts/Auth';
 
-export const Login = withAuth(() => {
+export const LoginContent = () => {
+  const { handleLogin, user } = useAuth();
+
   const { control, handleSubmit } = useForm({
     defaultValues: {
       email: 'teste@teste.com',
@@ -13,18 +15,16 @@ export const Login = withAuth(() => {
     },
   });
 
-  const onSubmit = async (data: Record<string, unknown>) => {
-    const { email, password } = data;
-    return { email, password };
-  };
+  const onSubmit = useCallback(handleSubmit(handleLogin), []);
 
   return (
     <>
-      <div className="flex min-h-screen max-w-md flex-col items-center justify-center px-4 py-2">
+      <div className="flex min-h-screen flex-col items-center justify-center px-4 py-2">
         <p className="pointer-events-none select-none text-5xl  font-extrabold tracking-tight">
           DEV<span className="text-orange-500">AULT</span>
         </p>
-        <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+        {user && <h2>Logado como {user.name}</h2>}
+        <form className="flex flex-col" onSubmit={onSubmit}>
           <label className="mb-2 block font-bold text-orange-700">E-Mail</label>
           <Controller
             name="email"
@@ -73,7 +73,6 @@ export const Login = withAuth(() => {
           </div>
         </form>
       </div>
-      <Button variant={ButtonVariant.SECONDARY}>Teste</Button>
     </>
   );
-});
+};

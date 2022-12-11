@@ -10,8 +10,8 @@ export const Sidebar = () => {
 
   return (
     <>
-      <div className="h-screen w-60 overflow-hidden px-4 shadow-lg shadow-black">
-        <header className="flex items-center justify-between">
+      <div className="h-screen w-full max-w-[240px] overflow-hidden bg-white shadow-lg">
+        <header className="flex h-14 items-center justify-between border-b border-r border-orange-900 px-4">
           <h1 className="pointer-events-none select-none text-3xl font-extrabold tracking-tight">
             DEV<span className="text-orange-500">AULT</span>
           </h1>
@@ -22,7 +22,7 @@ export const Sidebar = () => {
             <Menu />
           </div>
         </header>
-        <nav className="mt-4 flex flex-col gap-6">
+        <nav className="mt-4 flex flex-col gap-6 px-4">
           <div className="flex flex-col gap-1">
             <p className="mb-2 text-xs font-bold uppercase text-orange-300">TRABALHO TERAPEUTICO</p>
             <span className="flex items-center gap-2 text-base capitalize transition duration-150 hover:text-orange-600">

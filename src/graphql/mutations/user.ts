@@ -23,6 +23,30 @@ export const authUserMutation = graphql(`
       user {
         id
         name
+        email
+        gender
+        birthday
+        phone
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`);
+
+export const meQuery = graphql(`
+  query meQuery {
+    me {
+      token
+      user {
+        id
+        name
+        email
+        birthday
+        gender
+        phone
+        createdAt
+        updatedAt
       }
     }
   }

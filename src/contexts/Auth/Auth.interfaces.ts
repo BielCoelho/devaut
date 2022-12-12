@@ -4,13 +4,13 @@ import { type MeQueryQuery, type AuthUserInput, type User } from 'graphql/genera
 
 export interface IAuthProviderProps {
   children: ReactNode;
+  initialUser?: User;
 }
 
 export interface IAuthContextData {
   isAuthenticated: boolean;
   user?: User;
   handleLogin: (user: AuthUserInput) => void;
-  logout: () => void;
-  isLoadingAuth: boolean;
+  handleLogout: () => void;
   updateSession: (data: MeQueryQuery['me']) => void;
 }

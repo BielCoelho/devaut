@@ -1,14 +1,14 @@
 import React from 'react';
 import { type NextPage, type GetServerSideProps, type InferGetServerSidePropsType } from 'next';
 
-import { HomeContent } from 'contents/Home';
 import { userService } from 'services/user';
+import { withAuth } from 'utils/withAuth';
 
-const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
-  return <HomeContent />;
+const Private: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
+  return <h1>Private PAGE</h1>;
 };
 
-export default Home;
+export default withAuth(Private);
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const response = await userService.getSSRMe(ctx);

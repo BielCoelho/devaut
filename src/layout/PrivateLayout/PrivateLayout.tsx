@@ -2,11 +2,10 @@ import React from 'react';
 
 import { Sidebar } from 'components/Sidebar';
 import { Navbar } from 'components/Navbar';
-import { withAuth } from 'utils/withAuth';
 
 import { type IPrivateLayoutProps } from './PrivateLayout.interfaces';
 
-export const PrivateLayout = withAuth(({ children }: IPrivateLayoutProps) => {
+export const PrivateLayout = ({ children }: IPrivateLayoutProps) => {
   return (
     <div className="flex">
       <Sidebar />
@@ -16,4 +15,4 @@ export const PrivateLayout = withAuth(({ children }: IPrivateLayoutProps) => {
       </div>
     </div>
   );
-});
+};

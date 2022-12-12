@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { useAuth } from 'contexts/Auth';
+
 export const DashboardContent = () => {
-  return <p>dashboard</p>;
+  const { user } = useAuth();
+  return <p>{user?.name}</p>;
 };

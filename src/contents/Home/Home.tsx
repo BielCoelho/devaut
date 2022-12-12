@@ -1,7 +1,10 @@
 import React from 'react';
 
-import { LoginContent } from 'contents/Login';
+import { DashboardContent } from 'contents/Dashboard';
+import { withAuth } from 'utils/withAuth';
 
-export const HomeContent = () => {
-  return <LoginContent />;
+const HomeContentBase = () => {
+  return <DashboardContent />;
 };
+
+export const HomeContent = withAuth(HomeContentBase);

@@ -1,21 +1,27 @@
 import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import router from 'next/router';
 
 import { useAuth } from 'contexts/Auth';
+import { PrivateLayout } from 'layout/PrivateLayout';
+import { LoginContent } from 'contents/Login';
 
 export function withAuth<T>(Component: React.ComponentType<T>) {
-  return (props: T) => {
-    const { isAuthenticated, isLoadingAuth } = useAuth();
-    const { push } = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (props: T extends object ? T : any) => {
+    const { isAuthenticated } = useAuth();
 
     useEffect(() => {
-      if (!isAuthenticated) push('/');
+      if (router.pathname !== '/' && !isAuthenticated) router.push('/');
     }, [isAuthenticated]);
 
-    if (isLoadingAuth) return <div>Loading</div>;
-    // @ts-ignore
-    if (isAuthenticated) return <Component {...props} />;
+    if (isAuthenticated) {
+      return (
+        <PrivateLayout>
+          <Component {...props} />
+        </PrivateLayout>
+      );
+    }
+
+    return <LoginContent />;
   };
 }
-
-withAuth.displayName = 'withAuthComponent';

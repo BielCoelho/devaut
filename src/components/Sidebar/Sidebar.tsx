@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Menu, Activity, Sun, Users, CheckCircle, User, LogOut } from 'react-feather';
 
+import { useAuth } from 'contexts/Auth';
+
 export const Sidebar = () => {
+  const { handleLogout } = useAuth();
   const [isOpen, setIsOpen] = useState(true);
 
   function toggleVisibility() {
@@ -25,7 +28,7 @@ export const Sidebar = () => {
         <nav className="mt-4 flex flex-col gap-6 px-4">
           <div className="flex flex-col gap-1">
             <p className="mb-2 text-xs font-bold uppercase text-orange-300">TRABALHO TERAPEUTICO</p>
-            <span className="flex items-center gap-2 text-base capitalize transition duration-150 hover:text-orange-600">
+            <span className="flex items-center gap-2 text-base capitalize transition duration-300 hover:text-orange-600">
               <Activity size={16} />
               Visão Geral
             </span>
@@ -51,7 +54,10 @@ export const Sidebar = () => {
               <User size={16} />
               Meu Perfil
             </span>
-            <span className="flex items-center gap-2 text-base capitalize">
+            <span
+              className="flex cursor-pointer items-center gap-2 text-base capitalize transition-all duration-300 ease-in-out hover:text-orange-600"
+              onClick={handleLogout}
+            >
               <LogOut size={16} />
               Sair
             </span>

@@ -1,79 +1,55 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { createContext, useCallback, useContext, useState } from 'react';
 
 import { type User, type AuthUserInput, type MeQueryQuery } from 'graphql/generated/graphql';
 
 import { useLoginMutation } from 'hooks/react-query';
-import nookies from 'nookies';
+import { setCookie } from 'nookies';
 import { envs } from 'constants/envs';
-import { getToken, removeAuth, setAuth } from 'services/auth/auth.service';
-import { userService } from 'services/user/user.service';
+import { removeAuthToken, setAuthToken } from 'services/auth';
 
 import { type IAuthContextData, type IAuthProviderProps } from './Auth.interfaces';
 
 const AuthContext = createContext({} as IAuthContextData);
 
-const AuthProvider = ({ children }: IAuthProviderProps) => {
-  const [user, setUser] = useState<User>();
-  const [isLoadingAuth, setIsLoadingAuth] = useState(false);
+export const AuthProvider = ({ children, initialUser }: IAuthProviderProps) => {
+  const [user, setUser] = useState<User | undefined>(initialUser);
 
   const { mutateAsync: authUserService } = useLoginMutation();
-  const { push } = useRouter();
 
   const handleLogin = useCallback(async (data: AuthUserInput) => {
     try {
       const { authUser } = await authUserService(data);
       setUser(authUser?.user);
-      nookies.set(undefined, envs.AUTH_COOKIE, authUser.token, {
+      setCookie(undefined, envs.AUTH_COOKIE, authUser.token, {
         maxAge: 15 * 24 * 60 * 60, //15dias
         path: '/',
       });
-      push('/dashboard');
     } catch {
       throw new Error('mostrar falha ao autenticar usuario');
     }
   }, []);
 
-  function logout() {
+  const handleLogout = useCallback(() => {
     setUser(undefined);
-    removeAuth();
-  }
+    removeAuthToken();
+  }, []);
 
-  function updateSession(data: MeQueryQuery['me']) {
-    setAuth(data.token);
+  const updateSession = useCallback((data: MeQueryQuery['me']) => {
+    setAuthToken(data.token);
     setUser(data.user);
-  }
-
-  useEffect(() => {
-    if (!!getToken()) {
-      setIsLoadingAuth(true);
-      userService
-        .getMe()
-        .then(({ me }) => {
-          setAuth(me.token);
-          setUser(me.user);
-        })
-        .finally(() => setIsLoadingAuth(false));
-    }
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated: !!user, user, handleLogin, logout, isLoadingAuth, updateSession }}
+      value={{ isAuthenticated: !!user, user, handleLogin, handleLogout, updateSession }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
 
-function useAuth() {
+export const useAuth = () => {
   const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error('useAuth must be used within a AuthProvider');
-  }
-
+  if (!context) throw new Error('useAuth must be used within a AuthProvider');
   return context;
-}
-
-export { AuthProvider, useAuth };
+};

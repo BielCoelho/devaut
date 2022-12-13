@@ -1,5 +1,3 @@
-import '../styles/globals.css';
-
 import React from 'react';
 import { type AppProps } from 'next/app';
 
@@ -10,14 +8,20 @@ import { type User } from 'graphql/generated/graphql';
 
 import { queryClient } from 'services/react-query';
 import { AuthProvider } from 'contexts/Auth';
+import { GlobalStyle } from 'styles/globals';
+import { ThemeProvider } from 'styled-components';
+import { theme } from 'styles/theme';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider initialUser={pageProps?.initialUserState as User}>
-        <Component {...pageProps} />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </AuthProvider>
+      <ThemeProvider theme={theme}>
+        <AuthProvider initialUser={pageProps?.initialUserState as User}>
+          <Component {...pageProps} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </AuthProvider>
+        <GlobalStyle />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

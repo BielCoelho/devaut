@@ -5,6 +5,8 @@ import { Button } from 'components/Button';
 import { Input } from 'components/Input';
 import { useAuth } from 'contexts/Auth';
 
+import * as S from './Login.styles';
+
 export const LoginContent = () => {
   const { handleLogin, user } = useAuth();
 
@@ -19,7 +21,7 @@ export const LoginContent = () => {
 
   return (
     <>
-      <div className="flex min-h-screen flex-col items-center justify-center px-4 py-2">
+      <S.Wrapper>
         <p className="pointer-events-none select-none text-5xl  font-extrabold tracking-tight">
           DEV<span className="text-orange-500">AULT</span>
         </p>
@@ -72,7 +74,7 @@ export const LoginContent = () => {
             </div>
           </div>
         </form>
-      </div>
+      </S.Wrapper>
     </>
   );
 };

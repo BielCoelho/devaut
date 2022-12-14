@@ -1,24 +1,41 @@
-import { meQuery } from 'graphql/mutations/user';
+import { authUserMutation, meQuery } from 'graphql/mutations/user';
+import { type AuthUserInput } from 'graphql/generated/graphql';
 
 import { envs } from 'constants/envs';
-import { parseCookies } from 'nookies';
-import { getGraphQLAuthClient, graphQLAuthClient } from 'services/graphQL';
+import { parseCookies, type ParseCookiesContext } from 'nookies';
+import { getGraphQLRequestClient, graphQLRequestClient } from 'services/graphQL';
 
-class UserService {
+export class UserService {
+  private async getMeRequest(ctx?: ParseCookiesContext) {
+    try {
+      const hasToken = parseCookies(ctx)[envs.AUTH_COOKIE];
+      if (!hasToken) throw new Error('No token provided');
+
+      if (ctx) {
+        const response = await getGraphQLRequestClient(ctx).request(meQuery);
+        return response.me;
+      } else {
+        const response = await graphQLRequestClient.request(meQuery);
+        return response.me;
+      }
+    } catch (err) {
+      const error = err as Error;
+      throw new Error(error.message);
+    }
+  }
   async getMe() {
-    const hasToken = parseCookies()[envs.AUTH_COOKIE];
-
-    if (!hasToken) return { token: null, user: null };
-    return (await graphQLAuthClient.request(meQuery)).me;
+    const res = await this.getMeRequest();
+    return res;
   }
 
-  async getSSRMe(ctx?: Parameters<typeof getGraphQLAuthClient>[0]) {
+  async getSSRMe(ctx?: ParseCookiesContext) {
     if (!ctx) throw new Error('No context provided');
-    const hasToken = parseCookies(ctx)[envs.AUTH_COOKIE];
+    const res = await this.getMeRequest(ctx);
+    return res;
+  }
 
-    if (!hasToken) return { token: null, user: null };
-
-    return (await getGraphQLAuthClient(ctx).request(meQuery)).me;
+  async login(data: AuthUserInput) {
+    return await graphQLRequestClient.request(authUserMutation, { data });
   }
 }
 

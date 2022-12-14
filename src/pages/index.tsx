@@ -1,17 +1,13 @@
 import React from 'react';
-import { type NextPage, type GetServerSideProps, type InferGetServerSidePropsType } from 'next';
+import { type NextPage } from 'next';
 
 import { HomeContent } from 'contents/Home';
-import { userService } from 'services/user';
+import { withSSRAuth } from 'utils/withSSRAuth';
 
-const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
+const Home: NextPage = () => {
   return <HomeContent />;
 };
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const response = await userService.getSSRMe(ctx);
-
-  return { props: { initialUserState: response?.user } };
-};
+export const getServerSideProps = withSSRAuth();

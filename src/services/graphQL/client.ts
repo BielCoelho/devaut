@@ -1,18 +1,13 @@
 import { GraphQLClient } from 'graphql-request';
 
-import { envs } from 'constants/envs';
-import { parseCookies } from 'nookies';
+import { type ParseCookiesContext } from 'nookies';
+
+import { GraphQLRequestClient } from './graphql.service';
 
 export const graphQLRequest = new GraphQLClient(process.env.NEXT_PUBLIC_API_URL);
 
-export const getGraphQLAuthClient = (ctx?: ParseCookiesContext) => {
-  const cookies = parseCookies(ctx);
-  const token = cookies[envs.AUTH_COOKIE];
-  return new GraphQLClient(process.env.NEXT_PUBLIC_API_URL, {
-    headers: {
-      authorization: token,
-    },
-  });
+export const getGraphQLRequestClient = (ctx?: ParseCookiesContext) => {
+  return new GraphQLRequestClient({ ctx });
 };
 
-export const graphQLAuthClient = getGraphQLAuthClient();
+export const graphQLRequestClient = getGraphQLRequestClient();

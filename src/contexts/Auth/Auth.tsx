@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { type User, type AuthUserInput, type MeQueryQuery } from 'graphql/generated/graphql';
 
@@ -12,7 +13,7 @@ import { type IAuthContextData, type IAuthProviderProps } from './Auth.interface
 const AuthContext = createContext({} as IAuthContextData);
 
 export const AuthProvider = ({ children, initialUser }: IAuthProviderProps) => {
-  const [user, setUser] = useState<User | undefined>(initialUser);
+  const [user, setUser] = useState<User | undefined>(initialUser?.user);
 
   const { mutateAsync: authUserService } = useLoginMutation();
 
@@ -24,8 +25,8 @@ export const AuthProvider = ({ children, initialUser }: IAuthProviderProps) => {
         maxAge: 15 * 24 * 60 * 60, //15dias
         path: '/',
       });
-    } catch {
-      throw new Error('mostrar falha ao autenticar usuario');
+    } catch (err) {
+      toast.error('Erro ao fazer login');
     }
   }, []);
 

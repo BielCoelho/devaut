@@ -4,7 +4,7 @@ import { type MeQueryQuery, type AuthUserInput, type User } from 'graphql/genera
 
 export interface IAuthProviderProps {
   children: ReactNode;
-  initialUser?: User;
+  initialUser?: MeQueryQuery['me'];
 }
 
 export interface IAuthContextData {

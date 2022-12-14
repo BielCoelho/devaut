@@ -1,5 +1,5 @@
 import { envs } from 'constants/envs';
-import { parseCookies, setCookie } from 'nookies';
+import { parseCookies, type ParseCookiesContext, setCookie, type SetCookieContext } from 'nookies';
 
 export const setAuthToken = (token: string, ctx?: SetCookieContext) => {
   setCookie(ctx, envs.AUTH_COOKIE, token, {

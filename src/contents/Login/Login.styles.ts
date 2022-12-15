@@ -30,4 +30,11 @@ export const LoginForm = styled.form`
   justify-content: center;
   width: 100%;
   gap: 1rem;
+
+  h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: ${({ theme }) => theme.colors.headline};
+    margin-top: 1rem;
+  }
 `;

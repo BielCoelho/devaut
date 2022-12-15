@@ -1,6 +1,23 @@
+import { lighten, rgba } from 'polished';
 import styled, { css } from 'styled-components';
 
 import { ButtonVariantEnum, type ButtonAttributes } from './Button.interface';
+
+export const Loading = styled.span`
+  display: flex;
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 50%;
+  min-width: 1.25rem;
+  min-height: 1.25rem;
+  animation: spin 1s linear infinite;
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
 
 const DefaultButton = styled.button<ButtonAttributes>`
   ${({ theme, fontWeight = '700', fullWidth }) => css`
@@ -21,7 +38,7 @@ const DefaultButton = styled.button<ButtonAttributes>`
 
     &:disabled {
       cursor: not-allowed !important;
-      opacity: 0.8;
+      opacity: 0.7;
     }
 
     .buttonLoader {
@@ -56,12 +73,24 @@ const PrimaryButton = styled(DefaultButton)`
     &:not(:disabled):focus {
       box-shadow: inset 0 0 0 2px ${theme.colors.secondary};
     }
+
+    & ${Loading} {
+      border-color: ${rgba(theme.colors.highlight, 0.25)};
+      border-top-color: ${lighten(0.1, theme.colors.highlight)};
+    }
   `}
 `;
 
 const SecondaryButton = styled(DefaultButton)`
-  color: ${({ theme }) => theme.colors.main};
-  background: ${({ theme }) => theme.colors.secondary};
+  ${({ theme }) => css`
+    color: ${({ theme }) => theme.colors.main};
+    background: ${({ theme }) => theme.colors.secondary};
+
+    & ${Loading} {
+      border-color: ${rgba(theme.colors.secondary, 0.25)};
+      border-top-color: ${lighten(0.1, theme.colors.secondary)};
+    }
+  `}
 `;
 
 const TertiaryButton = styled(DefaultButton)`

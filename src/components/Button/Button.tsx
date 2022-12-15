@@ -1,7 +1,7 @@
 import React, { forwardRef, type ForwardRefRenderFunction as FFR } from 'react';
 
 import { ButtonVariantEnum, type IButtonProps } from './Button.interface';
-import { Buttons } from './Button.styles';
+import { Buttons, Loading } from './Button.styles';
 
 const ButtonComponent: FFR<HTMLButtonElement, IButtonProps> = (
   {
@@ -24,7 +24,7 @@ const ButtonComponent: FFR<HTMLButtonElement, IButtonProps> = (
       fullWidth={fullWidth}
       ref={ref}
     >
-      {isLoading ? children + '...' : children}
+      {isLoading ? <Loading /> : children}
     </ButtonComponent>
   );
 };

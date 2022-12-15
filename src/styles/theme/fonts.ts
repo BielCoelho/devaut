@@ -1,16 +1,21 @@
-import { Mulish, Poppins } from '@next/font/google';
+import { Inter, Mulish } from '@next/font/google';
 
 const mulishFont = Mulish({
-  weight: ['400', '700', '900'],
-  style: ['normal', 'italic'],
+  weight: ['400', '500', '600', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+  preload: true,
+  display: 'swap',
 });
 
-const poppinsFont = Poppins({
-  weight: ['400', '700'],
-  style: ['normal', 'italic'],
+const interFont = Inter({
+  weight: ['400', '500', '600', '700'],
+  style: ['normal'],
+  subsets: ['latin-ext'],
+  preload: true,
 });
 
 export const fonts = {
-  base: mulishFont,
-  secondary: poppinsFont,
+  base: mulishFont.style.fontFamily,
+  secondary: interFont.style.fontFamily,
 };

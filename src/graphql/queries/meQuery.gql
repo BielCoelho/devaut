@@ -1,0 +1,15 @@
+query meQuery {
+  me {
+    token
+    user {
+      id
+      name
+      email
+      birthday
+      gender
+      phone
+      createdAt
+      updatedAt
+    }
+  }
+}

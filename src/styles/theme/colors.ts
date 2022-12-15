@@ -25,6 +25,8 @@ const commonColors = {
 
 export const colors = {
   background: '#16161a',
+  background_light: '#1f1f24',
+  main: '#fffffe',
   headline: '#fffffe',
   paragraph: '#a7a9be',
   secondary: '#f25f4c',

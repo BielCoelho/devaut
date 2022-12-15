@@ -1,33 +1,24 @@
-import React, { createContext, useCallback, useContext, useState } from 'react';
-import { toast } from 'react-toastify';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
-import { type User, type AuthUserInput, type MeQueryQuery } from 'graphql/generated/graphql';
+import { type User, type AuthUserInput } from 'graphql/generated';
 
-import { useLoginMutation } from 'hooks/react-query';
-import { setCookie } from 'nookies';
-import { envs } from 'constants/envs';
+import { useAuthMutation } from 'hooks/useAuthMutation';
 import { removeAuthToken, setAuthToken } from 'services/auth';
+import { useMe } from 'hooks/useMe';
 
 import { type IAuthContextData, type IAuthProviderProps } from './Auth.interfaces';
 
 const AuthContext = createContext({} as IAuthContextData);
 
-export const AuthProvider = ({ children, initialUser }: IAuthProviderProps) => {
-  const [user, setUser] = useState<User | undefined>(initialUser?.user);
+export const AuthProvider = ({ children }: IAuthProviderProps) => {
+  const { data } = useMe();
+  const [user, setUser] = useState<User | undefined>(data?.user);
+  const { mutateAsync: authMutation } = useAuthMutation();
 
-  const { mutateAsync: authUserService } = useLoginMutation();
-
-  const handleLogin = useCallback(async (data: AuthUserInput) => {
-    try {
-      const { authUser } = await authUserService(data);
-      setUser(authUser?.user);
-      setCookie(undefined, envs.AUTH_COOKIE, authUser.token, {
-        maxAge: 15 * 24 * 60 * 60, //15dias
-        path: '/',
-      });
-    } catch (err) {
-      toast.error('Erro ao fazer login');
-    }
+  const handleAuth = useCallback(async (data: AuthUserInput) => {
+    const { authUser } = await authMutation({ data });
+    setUser(authUser.user);
+    setAuthToken(authUser.token);
   }, []);
 
   const handleLogout = useCallback(() => {
@@ -35,15 +26,12 @@ export const AuthProvider = ({ children, initialUser }: IAuthProviderProps) => {
     removeAuthToken();
   }, []);
 
-  const updateSession = useCallback((data: MeQueryQuery['me']) => {
-    setAuthToken(data.token);
-    setUser(data.user);
-  }, []);
+  useEffect(() => {
+    setUser(data?.user);
+  }, [data]);
 
   return (
-    <AuthContext.Provider
-      value={{ isAuthenticated: !!user, user, handleLogin, handleLogout, updateSession }}
-    >
+    <AuthContext.Provider value={{ isAuthenticated: !!user, user, handleAuth, handleLogout }}>
       {children}
     </AuthContext.Provider>
   );

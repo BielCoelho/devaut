@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { forwardRef, type ForwardRefRenderFunction as FFR } from 'react';
 
-import { ButtonVariant, type IButtonProps } from './Button.interfaces';
-import { getButtonVariants } from './helpers';
+import { ButtonVariantEnum, type IButtonProps } from './Button.interface';
+import { Buttons, Loading } from './Button.styles';
 
-export const Button = ({ children, variant = ButtonVariant.PRIMARY, ...rest }: IButtonProps) => {
+const ButtonComponent: FFR<HTMLButtonElement, IButtonProps> = (
+  {
+    children,
+    variant = ButtonVariantEnum.PRIMARY,
+    isLoading = false,
+    fontWeight = '700',
+    fullWidth,
+    ...rest
+  },
+  ref
+) => {
+  const ButtonComponent = Buttons[variant];
   return (
-    <button className={`${getButtonVariants(variant)}`} {...rest}>
-      {children}
-    </button>
+    <ButtonComponent
+      {...rest}
+      isLoading={isLoading}
+      disabled={isLoading || rest?.disabled}
+      fontWeight={fontWeight}
+      fullWidth={fullWidth}
+      ref={ref}
+    >
+      {isLoading ? <Loading /> : children}
+    </ButtonComponent>
   );
 };
 
-Button.displayName = 'ButtonComponent';
+export const Button = forwardRef(ButtonComponent);
+ButtonComponent.displayName = 'ButtonComponent';

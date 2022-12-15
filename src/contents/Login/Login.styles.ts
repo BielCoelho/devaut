@@ -1,23 +1,40 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Wrapper = styled.div`
+export const LoginWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 1rem;
+  min-height: 100vh;
+`;
 
-  p {
-    pointer-events: none;
-    user-select: none;
-    font-size: 3rem;
-    letter-spacing: -0.025;
-    /* color: ; */
+export const LoginFormWrapper = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 12px;
 
-    span {
-      margin: -8px;
-      font-weight: 900;
-    }
+    background-color: ${theme.colors.background_light};
+    color: ${theme.colors.main};
+  `}
+`;
+
+export const LoginForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  gap: 1rem;
+
+  h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: ${({ theme }) => theme.colors.headline};
+    margin-top: 1rem;
   }
 `;

@@ -1,16 +1,14 @@
 import { type ReactNode } from 'react';
 
-import { type MeQueryQuery, type AuthUserInput, type User } from 'graphql/generated/graphql';
+import { type AuthUserInput, type User } from 'graphql/generated/graphql';
 
 export interface IAuthProviderProps {
   children: ReactNode;
-  initialUser?: MeQueryQuery['me'];
 }
 
 export interface IAuthContextData {
   isAuthenticated: boolean;
   user?: User;
-  handleLogin: (user: AuthUserInput) => void;
+  handleAuth: (data: AuthUserInput) => Promise<void>;
   handleLogout: () => void;
-  updateSession: (data: MeQueryQuery['me']) => void;
 }

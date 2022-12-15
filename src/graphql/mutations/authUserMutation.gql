@@ -1,0 +1,15 @@
+mutation authUserMutation($data: AuthUserInput!) {
+  authUser(data: $data) {
+    token
+    user {
+      id
+      name
+      email
+      gender
+      birthday
+      phone
+      createdAt
+      updatedAt
+    }
+  }
+}

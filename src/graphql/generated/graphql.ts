@@ -1,5 +1,6 @@
-/* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import { GraphQLClient } from 'graphql-request';
+import * as Dom from 'graphql-request/dist/types.dom';
+import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -12,7 +13,6 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
   DateTime: any;
 };
 
@@ -110,32 +110,11 @@ export type User = {
   updatedAt: Scalars['DateTime'];
 };
 
-export type CreateUserMutationVariables = Exact<{
-  data: CreateUserInput;
-}>;
-
-export type CreateUserMutation = {
-  __typename?: 'Mutation';
-  createUser: {
-    __typename?: 'CreateUser';
-    token: string;
-    user: {
-      __typename?: 'User';
-      id: string;
-      name: string;
-      email: string;
-      birthday: any;
-      gender: GenderEnum;
-      phone: string;
-    };
-  };
-};
-
-export type AuthUserMutationVariables = Exact<{
+export type AuthUserMutationMutationVariables = Exact<{
   data: AuthUserInput;
 }>;
 
-export type AuthUserMutation = {
+export type AuthUserMutationMutation = {
   __typename?: 'Mutation';
   authUser: {
     __typename?: 'CreateUser';
@@ -150,6 +129,27 @@ export type AuthUserMutation = {
       phone: string;
       createdAt: any;
       updatedAt: any;
+    };
+  };
+};
+
+export type CreateUserMutationMutationVariables = Exact<{
+  data: CreateUserInput;
+}>;
+
+export type CreateUserMutationMutation = {
+  __typename?: 'Mutation';
+  createUser: {
+    __typename?: 'CreateUser';
+    token: string;
+    user: {
+      __typename?: 'User';
+      id: string;
+      name: string;
+      email: string;
+      birthday: any;
+      gender: GenderEnum;
+      phone: string;
     };
   };
 };
@@ -175,161 +175,131 @@ export type MeQueryQuery = {
   };
 };
 
-export const CreateUserDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'createUser' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'CreateUserInput' } },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'createUser' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'data' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'user' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'birthday' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'gender' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'phone' } },
-                    ],
-                  },
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'token' } },
-              ],
-            },
-          },
-        ],
-      },
+export type TesteQueryQueryVariables = Exact<{ [key: string]: never }>;
+
+export type TesteQueryQuery = { __typename?: 'Query'; testeUser: string };
+
+export const AuthUserMutationDocument = gql`
+  mutation authUserMutation($data: AuthUserInput!) {
+    authUser(data: $data) {
+      token
+      user {
+        id
+        name
+        email
+        gender
+        birthday
+        phone
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const CreateUserMutationDocument = gql`
+  mutation createUserMutation($data: CreateUserInput!) {
+    createUser(data: $data) {
+      user {
+        id
+        name
+        email
+        birthday
+        gender
+        phone
+      }
+      token
+    }
+  }
+`;
+export const MeQueryDocument = gql`
+  query meQuery {
+    me {
+      token
+      user {
+        id
+        name
+        email
+        birthday
+        gender
+        phone
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const TesteQueryDocument = gql`
+  query testeQuery {
+    testeUser
+  }
+`;
+
+export type SdkFunctionWrapper = <T>(
+  action: (requestHeaders?: Record<string, string>) => Promise<T>,
+  operationName: string,
+  operationType?: string
+) => Promise<T>;
+
+const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
+
+export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+  return {
+    authUserMutation(
+      variables: AuthUserMutationMutationVariables,
+      requestHeaders?: Dom.RequestInit['headers']
+    ): Promise<AuthUserMutationMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<AuthUserMutationMutation>(AuthUserMutationDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'authUserMutation',
+        'mutation'
+      );
     },
-  ],
-} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
-export const AuthUserDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'authUser' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'AuthUserInput' } },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'authUser' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'data' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'token' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'user' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'gender' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'birthday' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'phone' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
+    createUserMutation(
+      variables: CreateUserMutationMutationVariables,
+      requestHeaders?: Dom.RequestInit['headers']
+    ): Promise<CreateUserMutationMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<CreateUserMutationMutation>(CreateUserMutationDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'createUserMutation',
+        'mutation'
+      );
     },
-  ],
-} as unknown as DocumentNode<AuthUserMutation, AuthUserMutationVariables>;
-export const MeQueryDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'meQuery' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'me' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'token' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'user' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'birthday' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'gender' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'phone' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
+    meQuery(
+      variables?: MeQueryQueryVariables,
+      requestHeaders?: Dom.RequestInit['headers']
+    ): Promise<MeQueryQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<MeQueryQuery>(MeQueryDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'meQuery',
+        'query'
+      );
     },
-  ],
-} as unknown as DocumentNode<MeQueryQuery, MeQueryQueryVariables>;
+    testeQuery(
+      variables?: TesteQueryQueryVariables,
+      requestHeaders?: Dom.RequestInit['headers']
+    ): Promise<TesteQueryQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<TesteQueryQuery>(TesteQueryDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'testeQuery',
+        'query'
+      );
+    },
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;

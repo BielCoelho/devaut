@@ -1,11 +1,17 @@
-import type { InputHTMLAttributes } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { type InputHTMLAttributes, type ReactNode } from 'react';
+import type { Control, FieldError, FieldValues } from 'react-hook-form';
 
-export enum InputVariant {
-  PRIMARY = 'primary',
-  SECONDARY = 'secondary',
-  TERTIARY = 'tertiary',
-}
+export type IInputProps = {
+  name: string;
+  label?: string;
+  control?: Control<FieldValues | any>;
+  error?: FieldError;
+  wrapperClassName?: string;
+  customInput?: ReactNode;
+} & InputHTMLAttributes<HTMLInputElement>;
 
-export interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  variant?: InputVariant;
-}
+export type InputFieldAttributes = {
+  hasError?: boolean;
+  hasValue?: boolean;
+};

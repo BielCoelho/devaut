@@ -1,16 +1,47 @@
-import React, { forwardRef, type ForwardRefRenderFunction } from 'react';
+import React, { forwardRef, type ForwardRefRenderFunction as FFR } from 'react';
+import { Controller } from 'react-hook-form';
 
-import { getInputVariants } from './helpers';
 import type { IInputProps } from './Input.interfaces';
-import { InputVariant } from './Input.interfaces';
+import * as S from './Input.styles';
 
-const InputBase: ForwardRefRenderFunction<HTMLInputElement, IInputProps> = (
-  { variant = InputVariant.PRIMARY, ...rest },
-  ref
+const InputComponent: FFR<HTMLInputElement, IInputProps> = (
+  { name, label, control, error, ...rest },
+  originalRef
 ) => {
-  return <input className={getInputVariants(variant)} {...rest} ref={ref} />;
+  const isDisabled = rest?.disabled || rest?.readOnly;
+
+  return (
+    <S.InputContainer className={rest?.wrapperClassName}>
+      {label && <S.InputLabel htmlFor={name}>{label}</S.InputLabel>}
+      {control ? (
+        <Controller
+          name={name}
+          control={control}
+          defaultValue={rest?.defaultValue ?? ''}
+          render={({ field: { name, onBlur, onChange, ref, value } }) => {
+            return (
+              <S.InputField
+                id={name}
+                value={value}
+                name={name}
+                onBlur={onBlur}
+                onChange={onChange}
+                ref={ref}
+                hasValue={!!value}
+                hasError={!!error}
+                disabled={isDisabled}
+                {...rest}
+              />
+            );
+          }}
+        />
+      ) : (
+        <S.InputField id={name} name={name} ref={originalRef} {...rest} />
+      )}
+      {error && <S.InputError>{error.message}</S.InputError>}
+    </S.InputContainer>
+  );
 };
 
-InputBase.displayName = 'InputComponent';
-
-export const Input = forwardRef(InputBase);
+export const Input = forwardRef(InputComponent);
+InputComponent.displayName = 'InputComponent';

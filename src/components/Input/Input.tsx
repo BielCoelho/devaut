@@ -1,7 +1,7 @@
 import React, { forwardRef, type ForwardRefRenderFunction as FFR } from 'react';
 import { Controller } from 'react-hook-form';
 
-import type { IInputProps } from './Input.interfaces';
+import { type IInputProps } from './Input.interfaces';
 import * as S from './Input.styles';
 
 const InputComponent: FFR<HTMLInputElement, IInputProps> = (

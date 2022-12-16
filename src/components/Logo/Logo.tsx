@@ -5,8 +5,10 @@ import * as S from './Logo.styles';
 export const Logo = () => {
   return (
     <S.LogoContainer>
-      <S.LogoText>dev</S.LogoText>
-      <S.LogoHighlight>aut</S.LogoHighlight>
+      <S.LogoText>
+        dev
+        <S.LogoHighlight>aut</S.LogoHighlight>
+      </S.LogoText>
     </S.LogoContainer>
   );
 };

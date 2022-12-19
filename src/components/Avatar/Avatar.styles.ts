@@ -19,7 +19,6 @@ export const AvatarWrapper = styled.div<AvatarAttributes>`
       background: ${randomColor};
       filter: drop-shadow(0 0 0.325rem ${randomColorWithOpacity});
       position: relative;
-      cursor: default;
       user-select: none;
     `;
   }}

@@ -1,0 +1,14 @@
+import React from 'react';
+
+import { withAuth } from 'utils/withAuth';
+
+const newStaff = () => {
+  return (
+    <>
+      <h1>New Child</h1>
+      <form>Formulario</form>
+    </>
+  );
+};
+
+export default withAuth(newStaff);

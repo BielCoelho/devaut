@@ -7,7 +7,7 @@ type AvatarPropsWithName = {
 } & React.HTMLAttributes<HTMLSpanElement>;
 
 type MyAvatarWithSrc = {
-  src: string;
+  src?: string;
   name?: string;
   maxInitials?: number;
 } & ImgHTMLAttributes<HTMLImageElement>;

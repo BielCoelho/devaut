@@ -30,6 +30,7 @@ export function getRandomColor(str: string): string {
 export function getNameInitials(name: string, maxInitials: number) {
   return name
     .split(/\s/)
+    .filter((part) => part.length >= 3) // only include words with 3 or more characters
     .map((part) => part.substring(0, 1).toUpperCase())
     .filter((v) => !!v)
     .slice(0, maxInitials)

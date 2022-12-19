@@ -1,26 +1,27 @@
 import styled, { css } from 'styled-components';
 
-export const LogoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  font-family: ${({ theme }) => theme.fonts.logo};
-  text-transform: uppercase;
-  cursor: default;
-  user-select: none;
-`;
+interface ILogoContainerProps {
+  size: number;
+}
 
-export const LogoText = styled.h1`
-  ${({ theme }) => css`
-    font-weight: 400;
-    font-size: 2.5rem;
-    color: ${theme.colors.main};
-  `}
-`;
+export const LogoContainer = styled.div<ILogoContainerProps>`
+  ${({ theme, size }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: ${size + 'rem'};
+    font-family: ${theme.fonts.logo};
+    text-transform: uppercase;
+    user-select: none;
 
-export const LogoHighlight = styled.span`
-  ${({ theme }) => css`
-    color: ${theme.colors.highlight};
+    h1 {
+      font-weight: 400;
+      font-size: ${size + 0.5 + 'rem'};
+      color: ${theme.colors.main};
+    }
+
+    span {
+      color: ${theme.colors.highlight};
+    }
   `}
 `;

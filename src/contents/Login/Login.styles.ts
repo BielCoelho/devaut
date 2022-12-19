@@ -34,7 +34,7 @@ export const LoginForm = styled.form`
   h1 {
     font-size: 1.25rem;
     font-weight: 700;
-    color: ${({ theme }) => theme.colors.headline};
+    color: ${({ theme }) => theme.colors.main};
     margin-top: 1rem;
   }
 `;

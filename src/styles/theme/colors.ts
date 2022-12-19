@@ -21,14 +21,16 @@ const commonColors = {
   warn: '#ff9800',
   success: '#4caf50',
   info: '#03a9f4',
+  blue: '#2e9bf8',
+  pink: '#ff4181',
 } as const;
 
 export const colors = {
   background: '#16161a',
   background_light: '#1f1f24',
   main: '#fffffe',
-  headline: '#fffffe',
-  paragraph: '#a7a9be',
+  subtitle: '#a7a9be',
+  paragraph: '#d7d7d7',
   secondary: '#f25f4c',
   tertiary: '#e53170',
   highlight: '#ff8906',

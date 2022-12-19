@@ -1,10 +1,13 @@
+import { lighten } from 'polished';
 import styled, { css } from 'styled-components';
+
+import { type INavLinkProps } from './Navbar.interfaces';
 
 export const NavWrapper = styled.nav`
   ${({ theme }) => css`
     display: flex;
     background-color: ${theme.colors.background_light};
-    height: 6.25rem;
+    height: 5rem;
     width: 100%;
   `}
 `;
@@ -18,12 +21,13 @@ export const NavContainer = styled.div`
     max-width: ${theme.sizes.pageWidth};
     margin: 0 auto;
 
-    div:first-child {
+    a:first-child {
+      cursor: pointer;
       justify-self: left;
       align-self: center;
     }
 
-    div:last-child {
+    a:last-child {
       align-self: center;
       justify-self: right;
     }
@@ -33,19 +37,31 @@ export const NavContainer = styled.div`
 export const NavLinksWrapper = styled.div`
   display: flex;
   gap: 1rem;
+  align-items: center;
+  justify-content: center;
 
-  div {
+  a {
     width: 6rem;
   }
 `;
 
-export const NavLinkItem = styled.div`
+export const NavLinkItem = styled.div<INavLinkProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
+  color: ${({ active, theme }) => active && lighten(0.1, theme.colors.highlight)};
+
+  transition: all 0.2s;
+
   span {
     font-size: 0.875rem;
+  }
+
+  &:hover {
+    ${({ theme }) => css`
+      color: ${theme.colors.highlight};
+    `}
   }
 `;

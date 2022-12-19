@@ -2,13 +2,13 @@ import React from 'react';
 
 import * as S from './Logo.styles';
 
-export const Logo = () => {
+export const Logo = ({ size = 2 }) => {
   return (
-    <S.LogoContainer>
-      <S.LogoText>
+    <S.LogoContainer size={size}>
+      <h1>
         dev
-        <S.LogoHighlight>aut</S.LogoHighlight>
-      </S.LogoText>
+        <span>aut</span>
+      </h1>
     </S.LogoContainer>
   );
 };

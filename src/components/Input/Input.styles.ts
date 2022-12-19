@@ -37,7 +37,7 @@ export const InputField = styled.input<InputFieldAttributes>`
     transition: all 0.2s ease-in-out;
 
     &::placeholder {
-      color: inherit;
+      color: darken(0.2, inherit);
     }
 
     &:focus {
@@ -47,7 +47,7 @@ export const InputField = styled.input<InputFieldAttributes>`
 
     ${hasValue &&
     css`
-      color: ${theme.colors.headline};
+      color: ${theme.colors.main};
     `};
 
     ${hasError &&

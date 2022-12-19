@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
 
   const handleAuth = useCallback(async (data: AuthUserInput) => {
     const { authUser } = await authMutation({ data });
+
     setUser(authUser.user);
     setAuthToken(authUser.token);
   }, []);

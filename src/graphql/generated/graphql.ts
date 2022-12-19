@@ -52,7 +52,7 @@ export type CreateUserInput = {
   gender: GenderEnum;
   name: Scalars['String'];
   password: Scalars['String'];
-  phone: Scalars['String'];
+  phone?: InputMaybe<Scalars['String']>;
 };
 
 /** Available Genders types enum */
@@ -83,19 +83,33 @@ export type MutationCreateUserArgs = {
 };
 
 export type MutationUpdateUserArgs = {
-  data: CreateUserInput;
+  data: UpdateUserInput;
 };
 
 export type Query = {
   __typename?: 'Query';
+  getAllChildren: Array<Child>;
+  getChildById: Child;
+  getMyChildren: Array<Child>;
   getUserByID: CreateUser;
   me: CreateUser;
-  testeChild: Scalars['String'];
   testeUser: Scalars['String'];
+};
+
+export type QueryGetChildByIdArgs = {
+  id: Scalars['String'];
 };
 
 export type QueryGetUserByIdArgs = {
   id: Scalars['String'];
+};
+
+export type UpdateUserInput = {
+  birthday?: InputMaybe<Scalars['DateTime']>;
+  gender?: InputMaybe<GenderEnum>;
+  id: Scalars['String'];
+  name?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
 };
 
 export type User = {
@@ -106,7 +120,7 @@ export type User = {
   gender: GenderEnum;
   id: Scalars['ID'];
   name: Scalars['String'];
-  phone: Scalars['String'];
+  phone?: Maybe<Scalars['String']>;
   updatedAt: Scalars['DateTime'];
 };
 
@@ -126,10 +140,28 @@ export type AuthUserMutationMutation = {
       email: string;
       gender: GenderEnum;
       birthday: any;
-      phone: string;
+      phone?: string | null;
       createdAt: any;
       updatedAt: any;
     };
+  };
+};
+
+export type CreateChildMutationMutationVariables = Exact<{
+  data: CreateChildInput;
+}>;
+
+export type CreateChildMutationMutation = {
+  __typename?: 'Mutation';
+  createChild: {
+    __typename?: 'Child';
+    id: string;
+    name: string;
+    active: boolean;
+    birthday: any;
+    gender: GenderEnum;
+    updatedAt: any;
+    createdAt: any;
   };
 };
 
@@ -149,7 +181,7 @@ export type CreateUserMutationMutation = {
       email: string;
       birthday: any;
       gender: GenderEnum;
-      phone: string;
+      phone?: string | null;
     };
   };
 };
@@ -168,16 +200,12 @@ export type MeQueryQuery = {
       email: string;
       birthday: any;
       gender: GenderEnum;
-      phone: string;
+      phone?: string | null;
       createdAt: any;
       updatedAt: any;
     };
   };
 };
-
-export type TesteQueryQueryVariables = Exact<{ [key: string]: never }>;
-
-export type TesteQueryQuery = { __typename?: 'Query'; testeUser: string };
 
 export const AuthUserMutationDocument = gql`
   mutation authUserMutation($data: AuthUserInput!) {
@@ -193,6 +221,19 @@ export const AuthUserMutationDocument = gql`
         createdAt
         updatedAt
       }
+    }
+  }
+`;
+export const CreateChildMutationDocument = gql`
+  mutation createChildMutation($data: CreateChildInput!) {
+    createChild(data: $data) {
+      id
+      name
+      active
+      birthday
+      gender
+      updatedAt
+      createdAt
     }
   }
 `;
@@ -228,11 +269,6 @@ export const MeQueryDocument = gql`
     }
   }
 `;
-export const TesteQueryDocument = gql`
-  query testeQuery {
-    testeUser
-  }
-`;
 
 export type SdkFunctionWrapper = <T>(
   action: (requestHeaders?: Record<string, string>) => Promise<T>,
@@ -255,6 +291,20 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
             ...wrappedRequestHeaders,
           }),
         'authUserMutation',
+        'mutation'
+      );
+    },
+    createChildMutation(
+      variables: CreateChildMutationMutationVariables,
+      requestHeaders?: Dom.RequestInit['headers']
+    ): Promise<CreateChildMutationMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<CreateChildMutationMutation>(CreateChildMutationDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'createChildMutation',
         'mutation'
       );
     },
@@ -283,20 +333,6 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
             ...wrappedRequestHeaders,
           }),
         'meQuery',
-        'query'
-      );
-    },
-    testeQuery(
-      variables?: TesteQueryQueryVariables,
-      requestHeaders?: Dom.RequestInit['headers']
-    ): Promise<TesteQueryQuery> {
-      return withWrapper(
-        (wrappedRequestHeaders) =>
-          client.request<TesteQueryQuery>(TesteQueryDocument, variables, {
-            ...requestHeaders,
-            ...wrappedRequestHeaders,
-          }),
-        'testeQuery',
         'query'
       );
     },

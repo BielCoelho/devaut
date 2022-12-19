@@ -20,7 +20,9 @@ export const queryClient = new QueryClient({
   },
 });
 
-export const { authUserMutation, createUserMutation, meQuery } = getSdk(gqlClient);
+export const { authUserMutation, createUserMutation, meQuery, createChildMutation } =
+  getSdk(gqlClient);
+
 export const getSSRSdk = (ctx: ParseCookiesContext) => {
   const token = getActiveToken(ctx);
 

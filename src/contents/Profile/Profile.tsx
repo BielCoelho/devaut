@@ -35,7 +35,7 @@ export const ProfileContent = () => {
           </div>
           <div>
             <label>Telefone</label>
-            <Input name="telefone" value={user?.phone} />
+            <Input name="telefone" value={user?.phone ?? ''} />
           </div>
           <div>
             <label>Nova senha</label>

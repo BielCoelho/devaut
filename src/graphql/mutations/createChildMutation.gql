@@ -1,0 +1,11 @@
+mutation createChildMutation($data: CreateChildInput!) {
+  createChild(data: $data) {
+    id
+    name
+    active
+    birthday
+    gender
+    updatedAt
+    createdAt
+  }
+}

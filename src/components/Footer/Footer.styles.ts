@@ -4,8 +4,8 @@ export const FooterWrapper = styled.footer`
   ${({ theme }) => css`
     display: flex;
     background-color: ${theme.colors.background_light};
-    height: 2.5rem;
-    width: 100%; ;
+    width: 100%;
+    padding: 1rem 0;
   `}
 `;
 
@@ -18,28 +18,28 @@ export const FooterContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 2rem;
-
-    .space {
-      display: inline-block;
-      margin: 0 0.25rem;
-    }
-
-    img {
-      width: 1.5rem;
-      height: 100%;
-    }
-
-    > div {
-      display: flex;
-      align-items: center;
-    }
-
-    a {
-      transition: all 0.2s;
-    }
-
-    a:hover {
-      color: ${theme.colors.highlight};
-    }
   `}
+`;
+
+export const RightContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  img {
+    border-radius: 50%;
+    border: 1px solid ${({ theme }) => theme.colors.highlight};
+  }
+
+  a {
+    transition: all 0.3s;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.highlight};
+    }
+  }
+`;
+
+export const LeftContainer = styled.div`
+  display: flex;
+  align-items: center;
 `;

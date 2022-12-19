@@ -7,6 +7,7 @@ import { faker } from '@faker-js/faker/locale/pt_BR';
 import { withAuth } from 'utils/withAuth';
 import { Input } from 'components/Input';
 import { Button } from 'components/Button';
+import { withSSRAuth } from 'utils/withSSRAuth';
 
 import * as S from './index.styles';
 
@@ -165,3 +166,4 @@ const StaffMain = () => {
 };
 
 export default withAuth(StaffMain);
+export const getServerSideProps = withSSRAuth();

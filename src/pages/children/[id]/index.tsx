@@ -7,6 +7,7 @@ import { faker } from '@faker-js/faker/locale/pt_BR';
 import { withAuth } from 'utils/withAuth';
 import { Button } from 'components/Button';
 import { Input } from 'components/Input';
+import { withSSRAuth } from 'utils/withSSRAuth';
 
 import * as S from './index.styles';
 
@@ -189,3 +190,4 @@ const ChildrenId = () => {
 };
 
 export default withAuth(ChildrenId);
+export const getServerSideProps = withSSRAuth();

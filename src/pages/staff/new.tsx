@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { withAuth } from 'utils/withAuth';
+import { withSSRAuth } from 'utils/withSSRAuth';
 
 const newStaff = () => {
   return (
@@ -12,3 +13,4 @@ const newStaff = () => {
 };
 
 export default withAuth(newStaff);
+export const getServerSideProps = withSSRAuth();

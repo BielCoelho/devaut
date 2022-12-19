@@ -83,12 +83,22 @@ const PrimaryButton = styled(DefaultButton)`
 
 const SecondaryButton = styled(DefaultButton)`
   ${({ theme }) => css`
-    color: ${({ theme }) => theme.colors.main};
-    background: ${({ theme }) => theme.colors.secondary};
+    color: ${theme.colors.main};
+    background: ${theme.colors.background_light};
+
+    &:not(:disabled):hover,
+    &:not(:disabled):active {
+      background: ${theme.colors.highlight};
+      color: ${theme.colors.main};
+    }
+
+    &:not(:disabled):focus {
+      box-shadow: inset 0 0 0 2px ${theme.colors.secondary};
+    }
 
     & ${Loading} {
-      border-color: ${rgba(theme.colors.secondary, 0.25)};
-      border-top-color: ${lighten(0.1, theme.colors.secondary)};
+      border-color: ${rgba(theme.colors.highlight, 0.25)};
+      border-top-color: ${lighten(0.1, theme.colors.highlight)};
     }
   `}
 `;

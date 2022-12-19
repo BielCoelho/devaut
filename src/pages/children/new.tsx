@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { withAuth } from 'utils/withAuth';
+import { withSSRAuth } from 'utils/withSSRAuth';
 
-const NewChild = () => {
+const NewChildPage = () => {
   return (
     <>
       <h1>New Staff</h1>
@@ -11,4 +12,5 @@ const NewChild = () => {
   );
 };
 
-export default withAuth(NewChild);
+export default withAuth(NewChildPage);
+export const getServerSideProps = withSSRAuth();

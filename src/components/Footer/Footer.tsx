@@ -11,26 +11,26 @@ export const Footer = () => {
   return (
     <S.FooterWrapper>
       <S.FooterContainer>
-        <div>
-          Copyright © 2023
-          <span className="space">
-            <Logo size={0.5} />
-          </span>
-          Todos direitos reservados
-        </div>
-        <div>
-          Feito com <Heart className="space" color={theme.colors.red} size={16} /> por&nbsp;
-          <a target="_blank" rel="noreferrer" href={'https://github.com/ThisneyLandia/'}>
-            ThisneyLandia
+        <S.LeftContainer>
+          Copyright © 2023&nbsp;
+          <Logo size={0.5} />
+          &nbsp;Todos direitos reservados
+        </S.LeftContainer>
+
+        <S.RightContainer>
+          Feito com&nbsp;
+          <Heart color={theme.colors.red} size={16} />
+          &nbsp;por
+          <a target="_blank" rel="noreferrer" href="https://github.com/ThisneyLandia/">
+            &nbsp;ThisneyLandia&nbsp;
           </a>
-          <div>
-            <Image
-              className="space"
-              src="https://github.com/ThisneyLandia.png"
-              alt="ThisneyLandia Logo"
-            />
-          </div>
-        </div>
+          <Image
+            src="https://github.com/ThisneyLandia.png"
+            alt="ThisneyLandia Logo"
+            width={32}
+            height={32}
+          />
+        </S.RightContainer>
       </S.FooterContainer>
     </S.FooterWrapper>
   );

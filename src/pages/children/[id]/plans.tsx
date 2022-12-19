@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 
 import { withAuth } from 'utils/withAuth';
+import { withSSRAuth } from 'utils/withSSRAuth';
 
 const ChildrenPlans = () => {
   const router = useRouter();
@@ -11,3 +12,4 @@ const ChildrenPlans = () => {
 };
 
 export default withAuth(ChildrenPlans);
+export const getServerSideProps = withSSRAuth();

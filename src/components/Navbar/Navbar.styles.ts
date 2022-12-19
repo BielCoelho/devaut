@@ -7,7 +7,7 @@ export const NavWrapper = styled.nav`
   ${({ theme }) => css`
     display: flex;
     background-color: ${theme.colors.background_light};
-    height: 5rem;
+    height: ${theme.sizes.navbarHeight};
     width: 100%;
   `}
 `;

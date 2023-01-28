@@ -27,7 +27,7 @@ export const NavContainer = styled.div`
       align-self: center;
     }
 
-    a:last-child {
+    button:last-child {
       align-self: center;
       justify-self: right;
     }

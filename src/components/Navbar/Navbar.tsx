@@ -6,12 +6,25 @@ import { useRouter } from 'next/router';
 import { Avatar } from 'components/Avatar';
 import { Logo } from 'components/Logo';
 import { useAuth } from 'contexts/Auth';
+import { Dropdown } from 'components/Dropdown';
 
 import * as S from './Navbar.styles';
 
 export const Navbar = () => {
-  const { user } = useAuth();
+  const { user, handleLogout } = useAuth();
   const { asPath } = useRouter();
+
+  const dropdownOptions = [
+    <Link key={1} href={'/profile'}>
+      Meu perfil
+    </Link>,
+    <Link key={2} href={'/preferences'}>
+      Preferencias
+    </Link>,
+    <span onClick={handleLogout} key={3}>
+      Sair
+    </span>,
+  ];
 
   return (
     <S.NavWrapper>
@@ -39,9 +52,9 @@ export const Navbar = () => {
             </S.NavLinkItem>
           </Link>
         </S.NavLinksWrapper>
-        <Link href={'/profile'}>
+        <Dropdown itemMap={dropdownOptions}>
           <Avatar name={user?.name} round />
-        </Link>
+        </Dropdown>
       </S.NavContainer>
     </S.NavWrapper>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { type FormEvent, useState } from 'react';
 import { Trash2, Send } from 'react-feather';
 
 import { Input } from 'components/Input';
@@ -10,30 +10,28 @@ type Todos = {
   text: string;
 };
 
-// interface TodoListProps {
-//   todos: Todo[];
-// }
-
 export const Todo = () => {
   const [inputValue, setInputValue] = useState('');
   const [todos, setTodos] = useState<Todos[]>([
     { id: 1, text: 'Lorem Ipsum' },
     { id: 2, text: 'frankstein' },
     { id: 3, text: 'ben 10' },
-    { id: 4, text: 'miranha' },
-    { id: 5, text: 'stale' },
-    { id: 6, text: 'refresh' },
-    { id: 7, text: 'batman' },
   ]);
 
   const handleAddTodo = () => {
     //TODO: same id when delete any item and add another one
-    setTodos([...todos, { id: todos.length + 1, text: inputValue }]);
+    if (inputValue === '') return;
+    setTodos((prevState) => [...prevState, { id: Number(new Date()), text: inputValue }]);
     setInputValue('');
   };
 
   const handleDeleteTodo = (id: number) => {
     setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    handleAddTodo();
   };
 
   //TODO: reorder when dragged
@@ -42,7 +40,10 @@ export const Todo = () => {
     <S.TodoContainer>
       <h1>Tarefas</h1>
       {todos.length === 0 ? (
-        <h1>nada aqui</h1>
+        <>
+          <h2>nada aqui</h2>
+          <h3>Crie uma tarefa abaixo</h3>
+        </>
       ) : (
         <S.TodoItems>
           {todos.map((todo) => {
@@ -57,16 +58,16 @@ export const Todo = () => {
           })}
         </S.TodoItems>
       )}
-      <S.InputTodo>
+      <S.InputTodo onSubmit={handleSubmit}>
         <Input
           placeholder="Adicione uma tarefa"
           name="todo"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        <div onClick={() => handleAddTodo()}>
+        <S.IconContainer onClick={() => handleAddTodo()}>
           <Send />
-        </div>
+        </S.IconContainer>
       </S.InputTodo>
     </S.TodoContainer>
   );

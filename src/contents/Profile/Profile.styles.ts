@@ -34,3 +34,34 @@ export const ProfileContent = styled.div`
   flex-direction: column;
   gap: 1rem;
 `;
+
+export const ProfileAvatar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  align-self: center;
+  margin: 2rem 0;
+
+  span {
+    position: absolute;
+    display: flex;
+    opacity: 0;
+    align-items: center;
+    justify-content: center;
+    inset: 0;
+    z-index: 1;
+    background: #000000aa;
+
+    transition: all 0.2s;
+  }
+
+  &:hover {
+    span {
+      backdrop-filter: blur(1px);
+      opacity: 1;
+    }
+  }
+`;

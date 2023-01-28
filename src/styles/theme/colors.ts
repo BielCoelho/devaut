@@ -33,6 +33,7 @@ export const colors = {
   paragraph: '#d7d7d7',
   secondary: '#f25f4c',
   tertiary: '#e53170',
+  lockedInput: '#777777',
   highlight: '#ff8906',
   ...commonColors,
 } as const;

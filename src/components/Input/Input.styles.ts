@@ -19,7 +19,7 @@ export const InputLabel = styled.label`
 `;
 
 export const InputField = styled.input<InputFieldAttributes>`
-  ${({ theme, hasError, hasValue }) => css`
+  ${({ theme, hasError, hasValue, withBorder, readOnly, disabled }) => css`
     max-height: 3rem;
     min-height: 2.5rem;
     border: 0;
@@ -44,6 +44,16 @@ export const InputField = styled.input<InputFieldAttributes>`
       color: ${theme.colors.highlight};
       box-shadow: 0 0 0px 2px ${theme.colors.highlight};
     }
+
+    ${(readOnly || disabled) &&
+    css`
+      color: ${theme.colors.lockedInput};
+    `}
+
+    ${withBorder &&
+    css`
+      border: 3px solid ${theme.colors.background_light};
+    `}
 
     ${hasValue &&
     css`

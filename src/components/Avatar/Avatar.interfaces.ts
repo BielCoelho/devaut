@@ -15,7 +15,7 @@ type MyAvatarWithSrc = {
 type AvatarAllProps = AvatarPropsWithName | MyAvatarWithSrc;
 
 export type IAvatarProps = {
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large' | 'xlarge';
   round?: boolean;
   name?: string;
   src?: string;

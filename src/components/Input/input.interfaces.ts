@@ -9,9 +9,11 @@ export type IInputProps = {
   error?: FieldError;
   wrapperClassName?: string;
   customInput?: ReactNode;
+  withBorder?: boolean;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export type InputFieldAttributes = {
+  withBorder?: boolean;
   hasError?: boolean;
   hasValue?: boolean;
 };

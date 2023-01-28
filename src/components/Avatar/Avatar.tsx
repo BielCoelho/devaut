@@ -8,6 +8,7 @@ const sizes = {
   small: '2.5rem',
   medium: '4rem',
   large: '6rem',
+  xlarge: '9rem',
 } as const;
 
 export const Avatar = ({ src, name = '', size = 'medium', round, ...rest }: IAvatarProps) => {

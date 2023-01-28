@@ -3,11 +3,11 @@ import { type NextPage } from 'next';
 
 import { withSSRAuth } from 'utils/withSSRAuth';
 import { ProfileContent } from 'contents/Profile';
+import { withAuth } from 'utils/withAuth';
 
-const ProfileBase: NextPage = () => {
+const ProfilePage: NextPage = () => {
   return <ProfileContent />;
 };
 
-export default ProfileBase;
-
+export default withAuth(ProfilePage);
 export const getServerSideProps = withSSRAuth();

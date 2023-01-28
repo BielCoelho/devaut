@@ -35,7 +35,7 @@ export const TodoItems = styled.ul`
   `}
 `;
 
-export const InputTodo = styled.div`
+export const InputTodo = styled.form`
   ${({ theme }) => css`
     display: flex;
     gap: 0.5rem;
@@ -54,4 +54,10 @@ export const InputTodo = styled.div`
       }
     }
   `}
+`;
+
+export const IconContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

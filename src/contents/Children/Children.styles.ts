@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 
 interface ICardHeaderProps {
@@ -32,7 +33,7 @@ export const ChildrenHeader = styled.div`
   `}
 `;
 
-export const ChildrenContent = styled.div`
+export const ChildrenContent = styled(motion.div)`
   ${({ theme }) => css`
     margin-top: 2rem;
     display: grid;
@@ -42,7 +43,7 @@ export const ChildrenContent = styled.div`
   `}
 `;
 
-export const ChildrenCard = styled.article`
+export const ChildrenCard = styled(motion.article)`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
